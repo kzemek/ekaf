@@ -115,7 +115,7 @@ send_messages(StateName, #ekaf_server{ topic = Topic } = State, Messages)->
                 _ ->
                     ok
             end,
-            ekaf:produce_async_batched( Topic, Messages)
+            spawn_link(ekaf, produce_async_batched, [Topic, Messages])
     end.
 
 save_messages_until(_, _, Messages, OfflineMessages, undefined)->
